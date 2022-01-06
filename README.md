@@ -1,2 +1,2 @@
-# expenses-ios
-Simple budget tracker.
+# Expenses
+Simple budget tracker
