@@ -1,2 +1,2 @@
-# Expenses
+# Expenses iOS
 Simple budget tracker
