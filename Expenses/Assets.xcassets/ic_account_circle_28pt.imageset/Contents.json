@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_account_circle_28pt.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Firebase",
+        "repositoryURL": "https://github.com/akaffenberger/firebase-ios-sdk-xcframeworks",
+        "state": {
+          "branch": null,
+          "revision": "9dc8399e95abc0393410d72529bf3afb6be03ea3",
+          "version": "8.11.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
