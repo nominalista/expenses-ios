@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Wallet {
+struct Wallet: Identifiable {
     
     static var emojis: [String] {
         ["💵", "💸", "💰", "💳", "🏠", "✈️", "🏝"]
@@ -20,7 +20,7 @@ struct Wallet {
     var contributors: [User]
     var authorizedUserIDs: [String]
     
-    struct User {
+    struct User: Identifiable {
         let id: String
         let name: String
     }

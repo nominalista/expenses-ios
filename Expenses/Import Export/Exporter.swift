@@ -14,10 +14,11 @@ enum ExportingError: Error {
 class Exporter {
     
     static func exportToCSV(from transactions: [Transaction]) async throws -> URL {
-        var csvString = "Amount,Currency,Title,Date,Notes,Tags\n"
+        var csvString = "Type,Amount,Currency,Title,Date,Notes,Tags\n"
         
         let sortedTransactions: [Transaction] = transactions.sorted(by: { $0.date < $1.date })
         sortedTransactions.forEach { (transaction: Transaction) in
+            csvString.append("\"\(transaction.type.rawValue)\",")
             csvString.append("\"\(transaction.formattedAmountWithoutCurrency)\",")
             csvString.append("\"\(transaction.currency.code)\",")
             csvString.append("\"\(transaction.title)\",")

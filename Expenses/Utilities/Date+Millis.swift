@@ -22,6 +22,11 @@ extension Date {
     
     var startOfDay: Date? {
         let calendar = Calendar.current
-        return calendar.date(from: calendar.dateComponents([.year, .month, .day], from: self))
+        return calendar.startOfDay(for: self)
+    }
+    
+    var endOfDay: Date? {
+        let calendar = Calendar.current
+        return calendar.date(byAdding: .second, value: -1, to: self)
     }
 }

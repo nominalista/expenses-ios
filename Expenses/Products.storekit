@@ -1,0 +1,79 @@
+{
+  "identifier" : "D1289D5D",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "14546F28",
+      "localizations" : [
+
+      ],
+      "name" : "subscriptions",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "1.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "4514B759",
+          "introductoryOffer" : {
+            "displayPrice" : "",
+            "internalID" : "FD5B26C5",
+            "paymentMode" : "none"
+          },
+          "localizations" : [
+            {
+              "description" : "Cancel anytime.",
+              "displayName" : "Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "plus.monthly_subscription",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly Subscription",
+          "subscriptionGroupID" : "14546F28",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "10.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "C0EE21BF",
+          "introductoryOffer" : {
+            "internalID" : "B0C04087",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Cancel anytime.",
+              "displayName" : "Yearly + 7 days free",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "plus.yearly_subscription",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Yearly Subscription",
+          "subscriptionGroupID" : "14546F28",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

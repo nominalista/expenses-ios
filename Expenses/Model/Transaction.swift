@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Transaction: Hashable, Codable {
+struct Transaction: Identifiable, Hashable, Codable {
 
     var id: String
     var type: TransactionType

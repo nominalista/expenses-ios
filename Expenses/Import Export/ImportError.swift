@@ -12,6 +12,7 @@ enum ImportError: Error {
     case invalidFormat(Error)
     case invalidNumberOfColumns(Int)
     case invalidCellType(Int, Int)
+    case invalidType(String?, Int)
     case invalidAmount(String?, Int)
     case invalidCurrency(String?, Int)
     case invalidDate(String?, Int)
@@ -33,6 +34,8 @@ class ImportErrorHandler {
             return "Row \(row) has invalid number of columns."
         case .invalidCellType(let row, let column):
             return "Cell (\(row), \(column)) has invalid type."
+        case .invalidType(let value, let row):
+            return "Row \(row) has invalid type (\(value ?? "null"))."
         case .invalidAmount(let value, let row):
             return "Row \(row) has invalid amount (\(value ?? "null"))."
         case .invalidCurrency(let value, let row):

@@ -6,42 +6,94 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseAuth
+import FirebaseFunctions
+import GoogleSignIn
 
 class AuthState: ObservableObject {
     
+    struct User {
+        let id: String
+        let email: String?
+        let displayName: String?
+    }
+    
+    enum Error: Swift.Error {
+        case unauthenticated
+    }
+    
     static let shared = AuthState()
     
-    var userID: String? {
-        Auth.auth().currentUser?.uid
+    @Published var user: AuthState.User?
+    
+    private var auth: Auth {
+        Auth.auth()
     }
     
-    var userDisplayName: String? {
-        Auth.auth().currentUser?.displayName
+    private var functions: Functions {
+        Functions.functions()
     }
     
-    var userEmail: String? {
-        Auth.auth().currentUser?.email
-    }
+    private var listenerHandle: AuthStateDidChangeListenerHandle?
     
-    @Published var isUserLoggedIn = false
-    
-    func logIn(
-        with credential: AuthCredential,
-        completion: @escaping (Error?) -> Void
-    ) {
-        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
-            self?.updateIsUserLoggedIn()
-            completion(error)
+    init() {
+        user = auth.currentUser?.user
+        listenerHandle = auth.addStateDidChangeListener { [weak self] _, user in
+            if let user = user {
+                self?.user = user.user
+            } else {
+                self?.user = nil
+            }
         }
     }
     
-    func logOut() {
-        try? Auth.auth().signOut()
-        updateIsUserLoggedIn()
+    deinit {
+        listenerHandle.map { auth.removeStateDidChangeListener($0) }
     }
     
-    func updateIsUserLoggedIn() {
-        isUserLoggedIn = Auth.auth().currentUser != nil
+    func requireUser() throws -> AuthState.User {
+        guard let user = user else {
+            throw Error.unauthenticated
+        }
+        return user
+    }
+    
+    func signInWithApple() async -> Result<Void, Swift.Error> {
+        do {
+            let credential = try await AppleSignInHandler().requestCredential()
+            try await auth.signIn(with: credential)
+            return .success(())
+        } catch let error {
+            return .failure(error)
+        }
+    }
+    
+    func signInWithGoogle() async -> Result<Void, Swift.Error> {
+        do {
+            let credential = try await GoogleSignInHandler().requestCredential()
+            try await auth.signIn(with: credential)
+            return .success(())
+        } catch let error {
+            return .failure(error)
+        }
+    }
+    
+    func signOut() {
+        try? auth.signOut()
+    }
+    
+    func deleteUser() async throws {
+        guard auth.currentUser != nil else {
+            throw Error.unauthenticated
+        }
+        let _ = try await functions.httpsCallable("deleteUserWithData").call()
+    }
+}
+
+private extension FirebaseAuth.User {
+    
+    var user: AuthState.User {
+        AuthState.User(id: uid, email: email, displayName: displayName)
     }
 }

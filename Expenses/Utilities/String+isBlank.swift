@@ -8,6 +8,11 @@
 import Foundation
 
 extension String {
+    
+    var isEmptyOrBlank: Bool {
+        isEmpty || isBlank
+    }
+
     var isBlank: Bool {
         allSatisfy { $0.isWhitespace }
     }

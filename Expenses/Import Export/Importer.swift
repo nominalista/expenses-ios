@@ -10,19 +10,22 @@ import TabularData
 
 class Importer {
     
-    private let expectedNumberOfColumns = 6
+    private let expectedNumberOfColumns = 7
     
-    private let amountColumnIndex = 0
-    private let currencyColumnIndex = 1
-    private let titleColumnIndex = 2
-    private let dateColumnIndex = 3
-    private let notesColumnIndex = 4
-    private let tagsColumnIndex = 5
+    private let typeColumnIndex = 0
+    private let amountColumnIndex = 1
+    private let currencyColumnIndex = 2
+    private let titleColumnIndex = 3
+    private let dateColumnIndex = 4
+    private let notesColumnIndex = 5
+    private let tagsColumnIndex = 6
     
     private let transactionRepository: TransactionRepository
+    private let tagRepository: TagRepository
     
-    init(transactionRepository: TransactionRepository) {
+    init(transactionRepository: TransactionRepository, tagRepository: TagRepository) {
         self.transactionRepository = transactionRepository
+        self.tagRepository = tagRepository
     }
 
     func importTransactions(
@@ -74,6 +77,7 @@ extension Importer {
             throw ImportError.invalidNumberOfColumns(getNaturalRowIndex(of: row))
         }
         
+        let type = try getType(from: row)
         let amount = try getAmount(from: row)
         let currency = try getCurrency(from: row)
         let title = try getTitle(from: row)
@@ -82,7 +86,7 @@ extension Importer {
         let tags = try getTags(from: row)
         
         return Transaction(
-            type: .expense,
+            type: type,
             amount: amount,
             currency: currency,
             title: title,
@@ -90,6 +94,18 @@ extension Importer {
             date: date,
             notes: notes
         )
+    }
+    
+    private func getType(from row: DataFrame.Row) throws -> TransactionType {
+        guard let typeRawValue = try getStringElement(from: row, at: typeColumnIndex) else {
+            throw ImportError.invalidType(nil, getNaturalRowIndex(of: row))
+        }
+        
+        guard let type = TransactionType(rawValue: typeRawValue) else {
+            throw ImportError.invalidType(typeRawValue, getNaturalRowIndex(of: row))
+        }
+        
+        return type
     }
     
     private func getAmount(from row: DataFrame.Row) throws -> Double {
@@ -101,7 +117,7 @@ extension Importer {
             throw ImportError.invalidAmount(formattedAmount, getNaturalRowIndex(of: row))
         }
         
-        return Double(truncating: number)
+        return abs(Double(truncating: number))
     }
     
     private func getCurrency(from row: DataFrame.Row) throws -> Currency {
@@ -188,7 +204,7 @@ extension Importer {
                 if let existingTag = existingTagsByName[tag.name] {
                     existingTransactionTags.append(existingTag)
                 } else {
-                    let newTag = try await insert(tag: tag, toWalletWithID: walletID)
+                    let newTag = insert(tag: tag, toWalletWithID: walletID)
                     existingTagsByName[tag.name] = newTag
                     existingTransactionTags.append(newTag)
                 }
@@ -203,16 +219,11 @@ extension Importer {
     private func getExistingTagsByName(
         forWalletWithID walletID: String
     ) async throws -> [String: Tag] {
-        let tags = try await TagDataStore.shared.getTags(forWalletWithID: walletID).get()
+        let tags = try await tagRepository.getTags(forWalletWithID: walletID).get()
         return tags.reduce(into: [String: Tag]()) { $0[$1.name] = $1 }
     }
     
-    private func insert(
-        tag: Tag,
-        toWalletWithID walletID: String
-    ) async throws -> Tag {
-        try await TagDataStore.shared
-            .insert(tag: tag, toWalletWithID: walletID)
-            .get()
+    private func insert(tag: Tag, toWalletWithID walletID: String) -> Tag {
+        tagRepository.insert(tag: tag, toWalletWithID: walletID)
     }
 }

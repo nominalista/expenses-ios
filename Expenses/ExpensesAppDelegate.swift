@@ -18,8 +18,7 @@ class ExpensesAppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         print(NSHomeDirectory())
-        FirebaseApp.configure()
-        AuthState.shared.updateIsUserLoggedIn()
+        SubscriptionManager.shared.listenForTransacionUpdates()
         UITextView.appearance().backgroundColor = .clear
         return true
     }
