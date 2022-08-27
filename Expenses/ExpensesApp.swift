@@ -19,6 +19,8 @@ struct ExpensesApp: App {
         
     init() {
         FirebaseApp.configure()
+        UITableView.appearance().backgroundColor = .clear
+        //UITableViewCell.appearance().backgroundColor = .clear
     }
     
     var body: some Scene {

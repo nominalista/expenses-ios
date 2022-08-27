@@ -1,10 +1,3 @@
-//
-//  WalletButtonStyle.swift
-//  Expenses
-//
-//  Created by Nominalista on 06/02/2022.
-//
-
 import SwiftUI
 
 struct WalletButtonStyle: ButtonStyle {

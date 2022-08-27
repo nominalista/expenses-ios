@@ -29,17 +29,28 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                HomeListView(viewModel: viewModel)
-                
-                VStack {
-                    Spacer()
-                    HStack {
+            LinearGradient(
+                gradient: Gradient(colors: viewModel.backgroundColors),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.vertical)
+            .overlay(
+                ZStack {
+                    HomeListView(viewModel: viewModel)
+                    
+                    VStack {
                         Spacer()
-                        AddButton(action: { isAddEditViewPresented.toggle() })
+                        HStack {
+                            Spacer()
+                            AddButton(action: { isAddEditViewPresented.toggle() })
+                        }
                     }
                 }
-            }
+            )
+            .environment(\.colorScheme, .dark)
+            
+            
             .fileImporter(
                 isPresented: $isFileImporterPresented,
                 allowedContentTypes: [.commaSeparatedText],
@@ -71,6 +82,7 @@ struct HomeView: View {
                 LazyView {
                     let viewModel = AddEditTransactionViewModel(
                         transactionRepository: FirebaseTransactionRepository.shared,
+                        transactionLimit: viewModel.transactionLimit,
                         transaction: nil
                     )
                     AddEditTransactionView(viewModel: viewModel)
@@ -100,6 +112,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 leadingToolbarItemGroup
+                principalToolbarItemGroup
                 trailingToolbarItemGroup
             }
         }
@@ -123,6 +136,27 @@ struct HomeView: View {
                 Image.icPerson24pt
             }
             .buttonStyle(.toolbarIcon)
+        }
+    }
+    
+    private var principalToolbarItemGroup: some ToolbarContent {
+        ToolbarItemGroup(placement: .principal) {
+            Button {
+                
+            } label: {
+                HStack(spacing: 4) {
+                    Spacer().frame(width: 8)
+                    Text("My wallet")
+                        .font(.system(.title3, design: .rounded).weight(.semibold))
+                        .foregroundColor(.label)
+                    Image(systemName: "chevron.down")
+                        .font(.system(.body, design: .rounded).weight(.bold))
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .foregroundColor(.label)
+                }
+            }
+            .preferredColorScheme(.dark)
         }
     }
     

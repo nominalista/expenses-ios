@@ -16,12 +16,6 @@ struct HomeSummaryRow: View {
  
     var body: some View {        
         VStack(spacing: 16) {
-            HStack {
-                Spacer()
-                walletButton
-                Spacer()
-            }
-            
             VStack {
                 if !currencySummaries.isEmpty {
                     tabView
@@ -33,7 +27,6 @@ struct HomeSummaryRow: View {
         .padding(.horizontal, 16)
         .listRowBackground(Color.clear)
         .listRowInsets(.zero)
-        .background(Color.brandPrimary)
         .sheet(isPresented: $isWalletsViewPresented) {
             walletsView
         }

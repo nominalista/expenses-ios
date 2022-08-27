@@ -50,6 +50,10 @@ extension Image {
         Image(uiImage: .icon(named: "ic_close_24pt"))
     }
     
+    static var icDateRange24pt: Image {
+        Image(uiImage: .icon(named: "ic_date_range_24pt"))
+    }
+    
     static var icDelete24pt: Image {
         Image(uiImage: .icon(named: "ic_delete_24pt"))
     }

@@ -7,15 +7,27 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 @MainActor class HomeViewModel: ObservableObject {
     
     @Published private(set) var selectedWallet: Wallet?
-
     @Published private(set) var viewState = HomeViewState()
     
     @Published var isImporting = false
     @Published var isExporting = false
+    
+    @Published var backgroundColors: [Color] = [Color(.sRGB, red: 57/255, green: 123/255, blue: 68/255, opacity: 1.0), Color(.sRGB, red: 70/255, green: 144/255, blue: 148/255, opacity: 1.0)]
+    
+    var transactionLimit: TransactionLimit? {
+        if let subscriptionStatus = subscriptionManager.status, subscriptionStatus.isSubscribed {
+            return nil
+        }
+        return TransactionLimit(
+            currentNumberOfTransactions: viewState.transactions.count,
+            maxNumberOfTransactions: 100
+        )
+    }
     
     let showActivityView = PassthroughSubject<URL, Never>()
     let showImportErrorAlert = PassthroughSubject<String, Never>()
@@ -23,6 +35,7 @@ import Foundation
     private var walletRepository: WalletRepository
     private var transactionRepostiory: TransactionRepository
     private var tagRepository: TagRepository
+    private var subscriptionManager: SubscriptionManager
         
     private var userDefaultsCancellable: AnyCancellable?
     private var walletObservationCancellable: AnyCancellable?
@@ -31,11 +44,13 @@ import Foundation
     init(
         walletRepository: WalletRepository,
         transactionRepostiory: TransactionRepository,
-        tagRepository: TagRepository
+        tagRepository: TagRepository,
+        subscriptionManager: SubscriptionManager
     ) {
         self.walletRepository = walletRepository
         self.transactionRepostiory = transactionRepostiory
         self.tagRepository = tagRepository
+        self.subscriptionManager = subscriptionManager
         observeSelectedWallet()
     }
     
@@ -155,7 +170,8 @@ extension HomeViewModel {
         HomeViewModel(
             walletRepository: FirebaseWalletRepository.shared,
             transactionRepostiory: FirebaseTransactionRepository.shared,
-            tagRepository: FirebaseTagRepository.shared
+            tagRepository: FirebaseTagRepository.shared,
+            subscriptionManager: SubscriptionManager.shared
         )
     }
     
@@ -163,7 +179,8 @@ extension HomeViewModel {
         HomeViewModel(
             walletRepository: FakeWalletRepostiory(),
             transactionRepostiory: FakeTransactionRepository(),
-            tagRepository: FakeTagRepository()
+            tagRepository: FakeTagRepository(),
+            subscriptionManager: SubscriptionManager.shared
         )
     }
 }

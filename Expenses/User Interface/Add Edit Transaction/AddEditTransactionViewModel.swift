@@ -28,25 +28,29 @@ class AddEditTransactionViewModel: ObservableObject {
         didSet { tags = selectedTags.map { $0.name }.sorted(by: <).joined(separator: ", ") }
     }
     
+    var transactionLimit: TransactionLimit?
+    
     private var editedTransaction: Transaction?
     
     private let transactionRepository: TransactionRepository
 
     init(
         transactionRepository: TransactionRepository,
+        transactionLimit: TransactionLimit? = nil,
         transaction: Transaction? = nil
     ) {
         self.transactionRepository = transactionRepository
         
-        type = transaction?.type ?? .expense
-        amount = transaction?.formattedAmountWithoutCurrency ?? ""
-        currency = ""
-        title = transaction?.title ?? ""
-        tags = ""
-        date = transaction?.date ?? .now
-        notes = transaction?.notes ?? ""
+        self.type = transaction?.type ?? .expense
+        self.amount = transaction?.formattedAmountWithoutCurrency ?? ""
+        self.currency = ""
+        self.title = transaction?.title ?? ""
+        self.tags = ""
+        self.date = transaction?.date ?? .now
+        self.notes = transaction?.notes ?? ""
         
-        editedTransaction = transaction
+        self.transactionLimit = transactionLimit
+        self.editedTransaction = transaction
         
         defer {
             selectedTags = transaction?.tags ?? []

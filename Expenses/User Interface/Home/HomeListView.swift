@@ -6,17 +6,23 @@
 //
 
 import SwiftUI
+import StoreKit
+import UIKit
 
 struct HomeListView: View {
     
     @StateObject var viewModel: HomeViewModel
-    
+        
     var body: some View {
         List {
             HomeSummaryRow(
                 selectedWallet: viewModel.selectedWallet,
                 currencySummaries: viewModel.viewState.currencySummaries
             )
+            
+            HomeFilterView()
+                .listRowInsets(.init(vertical: 16, horizontal: 0))
+                .listRowStyle(.plain)
 
             ForEach(viewModel.viewState.sectionedTransactions.sortedDates, id: \.self) { date in
                 Section(header: Text(date.readableString)) {
@@ -36,10 +42,15 @@ struct HomeListView: View {
                             }
                         } label: {
                             TransactionRow(transaction: transaction)
+                                
                         }
                     }
                 }
             }
+            .listRowBackground(
+                VisualEffectView(effect: UIBlurEffect(style: .systemMaterialLight))
+                    .opacity(0.1)
+            )
         }
         .listStyle(.insetGrouped)
     }
@@ -51,7 +62,8 @@ struct HomeListView_Previews: PreviewProvider {
         let viewModel = HomeViewModel(
             walletRepository: FakeWalletRepostiory(),
             transactionRepostiory: FakeTransactionRepository(),
-            tagRepository: FakeTagRepository()
+            tagRepository: FakeTagRepository(),
+            subscriptionManager: SubscriptionManager.shared
         )
         HomeListView(viewModel: viewModel)
     }

@@ -30,6 +30,7 @@ struct AddEditTransactionView: View {
                 tagsRow
                 dateRow
                 notesRow
+                transactionLimitRow
             }
             .background(Color.systemGroupedBackground)
             .listStyle(.plain)
@@ -228,6 +229,39 @@ struct AddEditTransactionView: View {
                 .cornerRadius(8)
                 .frame(height: 100)
         }
+        .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 16, trailing: 0))
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+    }
+    
+    private var transactionLimitRow: some View {
+        HStack(spacing: 0) {
+            Group {
+                Text("\(viewModel.transactionLimit?.currentNumberOfTransactions ?? 0) of \(viewModel.transactionLimit?.maxNumberOfTransactions ?? 0)").font(.headline) + Text(" transactions added. Need more?")
+            }
+            .layoutPriority(1)
+            
+            Spacer()
+                .frame(minWidth: 16)
+            Button {
+                
+            } label: {
+                HStack {
+                    Text("Subscribe")
+                        .foregroundColor(.label)
+                        .font(.headline)
+                }
+            }
+            .padding(16)
+            .frame(height: 48)
+            .background(Color.brandPrimary)
+            .clipShape(Capsule())
+            .environment(\.colorScheme, .dark)
+            .layoutPriority(1)
+        }
+        .padding()
+        .backgroundColor(.brandPrimary.opacity(0.25))
+        .cornerRadius(8)
         .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 16, trailing: 0))
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)

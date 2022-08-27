@@ -101,11 +101,13 @@
 		DAA0734727A6854A00530A49 /* TransactionRepostiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0734627A6854A00530A49 /* TransactionRepostiory.swift */; };
 		DAA0734927A688C400530A49 /* FakeTransactionRepostiory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0734827A688C400530A49 /* FakeTransactionRepostiory.swift */; };
 		DAA3DDBF2793471300A772E4 /* Transaction+Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3DDBE2793471300A772E4 /* Transaction+Examples.swift */; };
+		DAA565FD2846B6A5003F69EB /* TransactionLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA565FC2846B6A5003F69EB /* TransactionLimit.swift */; };
 		DAA8159B2794C2FE0069533C /* ImportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA8159A2794C2FE0069533C /* ImportError.swift */; };
 		DAB13C10275D3CB50049BBF2 /* AddEditTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB13C0F275D3CB50049BBF2 /* AddEditTransactionViewModel.swift */; };
 		DAB3DE002841E1A700BFD667 /* HomeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3DDFF2841E1A700BFD667 /* HomeViewState.swift */; };
 		DABB9F1D27726770004A2342 /* TransactionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABB9F1C27726770004A2342 /* TransactionDetailViewModel.swift */; };
 		DAC1B4842790BE4D00C250E0 /* String+isBlank.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC1B4832790BE4D00C250E0 /* String+isBlank.swift */; };
+		DACCBC57285B7A7C00BA9892 /* HomeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCBC56285B7A7C00BA9892 /* HomeFilterView.swift */; };
 		DACE423627ED1EB2002AC42D /* SubscriptionManager+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE423527ED1EB2002AC42D /* SubscriptionManager+Status.swift */; };
 		DACE42CE27B1BAC7001FCDE8 /* ListRowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE42CD27B1BAC7001FCDE8 /* ListRowStyle.swift */; };
 		DAD2ADD5277D1538003343CC /* CGFloat+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2ADD4277D1538003343CC /* CGFloat+Constants.swift */; };
@@ -237,11 +239,13 @@
 		DAA0734627A6854A00530A49 /* TransactionRepostiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRepostiory.swift; sourceTree = "<group>"; };
 		DAA0734827A688C400530A49 /* FakeTransactionRepostiory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTransactionRepostiory.swift; sourceTree = "<group>"; };
 		DAA3DDBE2793471300A772E4 /* Transaction+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Examples.swift"; sourceTree = "<group>"; };
+		DAA565FC2846B6A5003F69EB /* TransactionLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionLimit.swift; sourceTree = "<group>"; };
 		DAA8159A2794C2FE0069533C /* ImportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportError.swift; sourceTree = "<group>"; };
 		DAB13C0F275D3CB50049BBF2 /* AddEditTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditTransactionViewModel.swift; sourceTree = "<group>"; };
 		DAB3DDFF2841E1A700BFD667 /* HomeViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewState.swift; sourceTree = "<group>"; };
 		DABB9F1C27726770004A2342 /* TransactionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailViewModel.swift; sourceTree = "<group>"; };
 		DAC1B4832790BE4D00C250E0 /* String+isBlank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+isBlank.swift"; sourceTree = "<group>"; };
+		DACCBC56285B7A7C00BA9892 /* HomeFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFilterView.swift; sourceTree = "<group>"; };
 		DACE423527ED1EB2002AC42D /* SubscriptionManager+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubscriptionManager+Status.swift"; sourceTree = "<group>"; };
 		DACE42CD27B1BAC7001FCDE8 /* ListRowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowStyle.swift; sourceTree = "<group>"; };
 		DAD2ADD4277D1538003343CC /* CGFloat+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Constants.swift"; sourceTree = "<group>"; };
@@ -546,6 +550,7 @@
 				DA4FCB3127B0365F0078E104 /* WalletButtonStyle.swift */,
 				DA69CB2027B80DF0009D415C /* TransactionFilterHandler.swift */,
 				DAB3DDFF2841E1A700BFD667 /* HomeViewState.swift */,
+				DACCBC56285B7A7C00BA9892 /* HomeFilterView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -605,6 +610,7 @@
 				DA0AE9F42767EC7600519454 /* Tags */,
 				DA9F74DE275C03D300BB1830 /* AddEditTransactionView.swift */,
 				DAB13C0F275D3CB50049BBF2 /* AddEditTransactionViewModel.swift */,
+				DAA565FC2846B6A5003F69EB /* TransactionLimit.swift */,
 			);
 			path = "Add Edit Transaction";
 			sourceTree = "<group>";
@@ -884,6 +890,7 @@
 				DA425F6F279D9B640082B7D1 /* Query+Combine.swift in Sources */,
 				DA0AE9FA276928A300519454 /* AddTagAlert.swift in Sources */,
 				DA0AE9F62767ECB500519454 /* TagsView.swift in Sources */,
+				DACCBC57285B7A7C00BA9892 /* HomeFilterView.swift in Sources */,
 				DA08344727A6DE6500948946 /* UINavigationController.swift in Sources */,
 				DA140E8A2838B6F900E118A4 /* TransactionRow.swift in Sources */,
 				DA69CB2127B80DF0009D415C /* TransactionFilterHandler.swift in Sources */,
@@ -895,6 +902,7 @@
 				DA884F71276007670055E173 /* ExpensesAppDelegate.swift in Sources */,
 				DA884F73276009F40055E173 /* WelcomeViewModel.swift in Sources */,
 				DA4FCB2527AF068D0078E104 /* BackgroundColor.swift in Sources */,
+				DAA565FD2846B6A5003F69EB /* TransactionLimit.swift in Sources */,
 				DAF899E527B2FF03004D2002 /* AddContributorCell.swift in Sources */,
 				DA30F73227BC3FBC00158C53 /* AppleSignInHandler.swift in Sources */,
 				DACE42CE27B1BAC7001FCDE8 /* ListRowStyle.swift in Sources */,
