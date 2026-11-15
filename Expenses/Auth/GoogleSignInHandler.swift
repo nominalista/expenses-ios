@@ -29,17 +29,15 @@ class GoogleSignInHandler {
     }
     
     func requestCredential() async throws -> AuthCredential {
-        try await withCheckedThrowingContinuation { continuation in 
-            GIDSignIn.sharedInstance.signIn(
-                with: configuration,
-                presenting: viewController
-            ) { user, error in
+        try await withCheckedThrowingContinuation { continuation in
+            GIDSignIn.sharedInstance.configuration = configuration
+            GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { result, error in
                 if let error = error {
                     continuation.resume(throwing: error)
-                } else if let user = user {
+                } else if let user = result?.user {
                     let credential = GoogleAuthProvider.credential(
-                        withIDToken: user.authentication.idToken!,
-                        accessToken: user.authentication.accessToken
+                        withIDToken: user.idToken!.tokenString,
+                        accessToken: user.accessToken.tokenString
                     )
                     continuation.resume(returning: credential)
                 } else {
